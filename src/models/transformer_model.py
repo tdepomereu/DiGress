@@ -138,6 +138,11 @@ class NodeEdgeBlock(nn.Module):
         :param node_mask: bs, n
         :return: newX, newE, new_y with the same shape.
         """
+
+        # Ensure tensors are on the correct device
+        device = X.device  # Assuming X is on the correct device
+        y = y.to(device)   # Move y to the correct device if needed
+
         bs, n, _ = X.shape
         x_mask = node_mask.unsqueeze(-1)        # bs, n, 1
         e_mask1 = x_mask.unsqueeze(2)           # bs, n, 1, 1
