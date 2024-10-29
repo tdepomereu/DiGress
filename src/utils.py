@@ -137,3 +137,28 @@ def setup_wandb(cfg):
               'settings': wandb.Settings(_disable_stats=True), 'reinit': True, 'mode': cfg.general.wandb}
     wandb.init(**kwargs)
     wandb.save('*.txt')
+
+
+def count_node_connections(edge_index):
+    from collections import defaultdict
+
+    # Extract the source and target lists
+    source_nodes = edge_index[0]
+    target_nodes = edge_index[1]
+
+    # Dictionary to keep track of the number of connections for each node
+    node_connections = defaultdict(int)
+
+    # Iterate over the pairs of source and target nodes
+    for src, tgt in zip(source_nodes, target_nodes):
+        # Increment the connection count for both nodes in the edge
+        node_connections[src] += 1
+        node_connections[tgt] += 1
+
+    # Find the maximum node index to create a complete list
+    max_node = max(node_connections.keys())
+
+    # Create the list with the number of edges connected to each node
+    connections_list = [node_connections[i] for i in range(max_node + 1)]
+
+    return connections_list
