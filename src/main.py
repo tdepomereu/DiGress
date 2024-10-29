@@ -154,10 +154,6 @@ def main(cfg: DictConfig):
         from analysis.visualization import NonMolecularVisualization
 
         datamodule = GeneratedGraphDataModule(cfg)
-        for i in range(len(datamodule)):
-            graph = datamodule[i]  # Automatically reconstructs the i-th graph
-            print(f"Graph {i}:")
-            print(graph.edge_index)
         sampling_metrics = PlanarSamplingMetrics(datamodule)
 
         dataset_infos = GeneratedDatasetInfos(datamodule, dataset_config)
